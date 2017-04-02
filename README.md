@@ -1,0 +1,2 @@
+# ECA
+Elementary Callular Automaton
