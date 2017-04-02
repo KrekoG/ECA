@@ -8,7 +8,7 @@ in production!**
 
 This plugin displays an [elementary cellular automaton](https://en.wikipedia.org/wiki/Elementary_cellular_automaton)
 through the use of colored divs.
-See an example use with [vue.js](https://vuejs.org/), [here]().
+See an example use with [vue.js](https://vuejs.org/), [here](https://krekog.github.io/eca/).
 
 ## How to install
 
