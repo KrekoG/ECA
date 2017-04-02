@@ -1,0 +1,26 @@
+{
+  "name": "eca",
+  "version": "1.0.0",
+  "dependencies": {
+    "jquery": "~3.1.1"
+  },
+  "homepage": "https://github.com/KrekoG/eca",
+  "authors": [
+    "Gergely Kreko <kreko.gergely@gmail.com>"
+  ],
+  "description": "Elementary Cellular Automaton",
+  "main": "eca.js",
+  "keywords": [
+    "elementary",
+    "cellular",
+    "automaton"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

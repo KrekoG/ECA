@@ -1,0 +1,139 @@
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <script type="text/javascript" src="eca.min.js"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+    <style>
+        body {
+            background-color: #454545;
+            color: #c5c5c5;
+            font-family: Lato;
+            margin: 0.5rem;
+        }
+        p {
+            margin: 0.3rem;
+        }
+        a {
+            color: #c5c5c5;
+        }
+        .controlPanel {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            padding: 0.2rem;
+        }
+        .controlPanel h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="cellularAutomaton">
+        <div class="controlPanel">
+            <h1>Elementary Cellular Automaton</h1>
+            <p>This is a one dimensional elementary cellular automaton generator. If you have no idea what that means,
+                go <a target="_blank" href="https://en.wikipedia.org/wiki/Cellular_automaton">here</a> or just play around with the
+                values and press the start button. Currently there are no limits set on how many states (rows) it will
+                generate, so don't leave it running for too long, or it will freeze the tab. If you do not provide an
+                initial state, it will start from a randomly generated state. There is no upper limit to the number of
+                cells, but if you go too high it will freeze the tab (depending on your computer). The colors take
+                hexadecimal color codes (#ffff00) and names as well (yellow) and will only affect new states. From a
+                phone you will need to scroll down to see the action. Enjoy.
+            </p>
+            <p>This page was built with the <a target="_blank" href="https://github.com/KrekoG/eca">eca plugin</a> and
+                <a target="_blank" href="https://vuejs.org/">vue.js</a>
+            </p>
+            <p>To see a list of rules producing nice patterns, go <a target="_blank" href="http://atlas.wolfram.com/01/01/">here</a>.</p>
+            <div class="options">
+                <div class="option-group">
+                    <label for="activeColor">Color of active cells</label>
+                    <input v-model="activeColor" v-on:input="setColorOfActive" name="activeColor">
+                </div>
+                <div class="option-group">
+                    <label for="inactiveColor">Color of inactive cells</label>
+                    <input v-model="inactiveColor" v-on:input="setColorOfInactive" name="inactiveColor">
+                </div>
+                <div class="option-group">
+                    <label for="noOfRule">Number of rule</label>
+                    <input v-model="noOfRule" v-on:input="setRule" name="noOfRule" type="number" max="255" min="0">
+                </div>
+                <div class="option-group">
+                    <label for="numberOfCells">Number of cells to display</label>
+                    <input v-model="numberOfCells" v-on:blur="setNumberOfCells" :disabled="automatonIsRunning ? 'disabled' : null" name="numberOfCells" type="number" max="255" min="0">
+                </div>
+                    <div class="option-group"><label for="initialState">The initial state of the cells. e.g.: 00000100000</label>
+                    <input v-model="initialState" v-on:input="setInitialState" :disabled="automatonIsRunning ? 'disabled' : null" name="initialState" type="number">
+                </div>
+            </div>
+                <div>
+                <button v-on:click="start">Start</button>
+                <button v-on:click="stop">Stop</button>
+                <button v-on:click="reset">Reset</button>
+            </div>
+        </div>
+   </div>
+
+    <div class="test"></div>
+    <script>
+        /** vue.js */
+        cellularAutomaton = new Vue({
+            el: 'body',
+            data: {
+                ECA: $('#cellularAutomaton').bindECA({
+                    numberOfCells: 100,
+                    speed: 50,
+                    ruleNumber: 26,
+                }),
+                activeColor: '2ca02c',
+                inactiveColor: 'transparent',
+                noOfRule: 26,
+                automatonIsRunning: false,
+                numberOfCells: 100,
+                initialState: null,
+            },
+            methods: {
+                start: function () {
+                    this.ECA.trigger('start.ECA');
+                    this.automatonIsRunning = true;
+                },
+                stop: function () {
+                    this.ECA.trigger('stop.ECA');
+                    this.automatonIsRunning = false;
+                },
+                reset: function () {
+                    this.ECA.trigger('reset.ECA');
+                },
+                setColorOfActive: function () {
+                    this.ECA.setColorOfActive(this.activeColor);
+                },
+                setColorOfInactive: function () {
+                    this.ECA.setColorOfInactive(this.inactiveColor);
+                },
+                setRule: function () {
+                    this.ECA.setRule(this.noOfRule);
+                },
+                setNumberOfCells: function () {
+                    this.ECA.setNumberOfCells(this.numberOfCells);
+                },
+                setInitialState: function () {
+                    this.ECA.setInitialState(this.initialState);
+                }
+            }
+        });
+        /** vue.js end*/
+    </script>
+</body>
+</html>
